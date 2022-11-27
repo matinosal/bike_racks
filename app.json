@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "bike_racks",
-    "slug": "bike_racks",
+    "slug": "bike-racks",
+    "owner": "matinosal",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +19,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "ios.config.googleMapsApiKey" : "AIzaSyB7E8O4RVwwNSikFE4TH8XEEzypHIG4eE8"
     },
     "android": {
       "adaptiveIcon": {
