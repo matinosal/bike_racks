@@ -44,9 +44,11 @@ const MapScreen: React.FC = () => {
 
   const onRegionChangeCompleteHandler = async (
     eventData: Region,
-    isGesture: {
-      isGesture: boolean;
-    }
+    isGesture:
+      | {
+          isGesture: boolean;
+        }
+      | undefined
   ): any => {
     if (isGesture?.isGesture) {
       const providedMarkers = await markerProvider.searchMarkers(eventData);
