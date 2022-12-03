@@ -10,8 +10,8 @@ import MarkerProvider from "../components/map/MarkerProvider";
 const initialData: MapLocation = {
   latitude: 50.07212722890865,
   longitude: 19.94170333681023,
-  latitudeDelta: 0.015,
-  longitudeDelta: 0.0121,
+  latitudeDelta: 0.0021773514383554016,
+  longitudeDelta: 0.002297312021255493,
 };
 
 const markerProvider = new MarkerProvider();
@@ -51,8 +51,8 @@ const MapScreen: React.FC = () => {
         region={{
           latitude: location.latitude,
           longitude: location.longitude,
-          latitudeDelta: locationDelta.latitudeDelta || 0.015,
-          longitudeDelta: locationDelta.longitudeDelta || 0.0121,
+          latitudeDelta: locationDelta.latitudeDelta || 0.002177,
+          longitudeDelta: locationDelta.longitudeDelta || 0.0022973,
         }}
         initialRegion={initialData as Region}
         onRegionChangeComplete={(region, isGesture) => {
