@@ -15,12 +15,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "ios.config.googleMapsApiKey" : "AIzaSyB7E8O4RVwwNSikFE4TH8XEEzypHIG4eE8"
+      "ios.config.googleMapsApiKey": ""
     },
     "android": {
       "adaptiveIcon": {

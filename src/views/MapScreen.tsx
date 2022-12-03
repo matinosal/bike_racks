@@ -1,21 +1,26 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
-import MapView, { LatLng, Marker } from "react-native-maps";
+import MapView, { LatLng, Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
 import { useEffect, useState } from "react";
-import { MarkerType } from "../components/map/CustomMapTypes";
+import { MapLocation, MarkerType } from "../components/map/CustomMapTypes";
 import MarkerProvider from "../components/map/MarkerProvider";
 
-export default function MapScreen() {
-  const markerProvider = new MarkerProvider();
+const initialData: MapLocation = {
+  latitude: 50.07212722890865,
+  longitude: 19.94170333681023,
+  latitudeDelta: 0.015,
+  longitudeDelta: 0.0121,
+};
 
-  const [location, setLocation] = useState<Location.LocationObject | LatLng>(
-    initialData
-  );
+const markerProvider = new MarkerProvider();
 
+const MapScreen: React.FC = () => {
+  const [location, setLocation] = useState<MapLocation>(initialData);
+  const [locationDelta, setLocationDelta] = useState<MapLocation>(initialData);
   const [errorMessage, setErrorMessage] = useState<String>();
-  const [markers, setMarkers] = useState<MarkerType[]>();
+  const [markers, setMarkers] = useState<MarkerType[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -27,25 +32,36 @@ export default function MapScreen() {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      setLocation(location.coords);
+      setLocationDelta(initialData);
     })();
-
-    setMarkers(markerProvider.getMarkers());
   }, []);
 
+  const onRegionChangeCompleteHandler = async (eventData: Region): any => {
+    const providedMarkers = await markerProvider.searchMarkers(eventData);
+    setMarkers(providedMarkers);
+    setLocation(eventData);
+    setLocationDelta(eventData);
+  };
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         provider="google"
         region={{
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
+          latitude: location.latitude,
+          longitude: location.longitude,
+          latitudeDelta: locationDelta.latitudeDelta || 0.015,
+          longitudeDelta: locationDelta.longitudeDelta || 0.0121,
+        }}
+        initialRegion={initialData as Region}
+        onRegionChangeComplete={(region, isGesture) => {
+          if (isGesture?.isGesture) {
+            onRegionChangeCompleteHandler(region);
+          }
         }}
       >
-        {markers?.map((marker, index) => (
+        {markers.map((marker, index) => (
           <Marker
             key={index}
             coordinate={{
@@ -57,7 +73,7 @@ export default function MapScreen() {
       </MapView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -69,15 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const initialData = {
-  coords: {
-    latitude: 50.07212722890865,
-    longitude: 19.94170333681023,
-    altitude: 0,
-    accuracy: 0,
-    altitudeAccuracy: 0,
-    heading: 0,
-    speed: 0,
-  },
-  timestamp: 0,
-};
+export default MapScreen;

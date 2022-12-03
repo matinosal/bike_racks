@@ -7,22 +7,9 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import MapScreen from "./src/views/MapScreen";
 import ProfileScreen from "./src/views/ProfileScreen";
 
-// const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
-// export default function App() {
-//     return (
-//       <NavigationContainer>
-//         <Stack.Navigator>
-//           <Stack.Screen
-//             name="Find Racks"
-//             component={MapScreen}
-//           />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//     );
-// }
-
+//TODO zapisywanie lokalizacji do localStorage przy starcie apki
+//ewentualnie robic potem update co x czasu
 export default function App() {
   return (
     <NavigationContainer>
