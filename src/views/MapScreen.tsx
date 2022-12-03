@@ -4,7 +4,12 @@ import { StyleSheet, Text, View } from "react-native";
 import MapView, { LatLng, Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
 import { useEffect, useState } from "react";
-import { MapLocation, MarkerType } from "../components/map/CustomMapTypes";
+import {
+  MapCoordinates,
+  MapDelta,
+  MapLocation,
+  MarkerType,
+} from "../components/map/CustomMapTypes";
 import MarkerProvider from "../components/map/MarkerProvider";
 
 const initialData: MapLocation = {
@@ -17,8 +22,8 @@ const initialData: MapLocation = {
 const markerProvider = new MarkerProvider();
 
 const MapScreen: React.FC = () => {
-  const [location, setLocation] = useState<MapLocation>(initialData);
-  const [locationDelta, setLocationDelta] = useState<MapLocation>(initialData);
+  const [location, setLocation] = useState<MapCoordinates>(initialData);
+  const [locationDelta, setLocationDelta] = useState<MapDelta>(initialData);
   const [errorMessage, setErrorMessage] = useState<String>();
   const [markers, setMarkers] = useState<MarkerType[]>([]);
 
@@ -37,28 +42,26 @@ const MapScreen: React.FC = () => {
     })();
   }, []);
 
-  const onRegionChangeCompleteHandler = async (eventData: Region): any => {
-    const providedMarkers = await markerProvider.searchMarkers(eventData);
-    setMarkers(providedMarkers);
-    setLocation(eventData);
-    setLocationDelta(eventData);
+  const onRegionChangeCompleteHandler = async (
+    eventData: Region,
+    isGesture: {
+      isGesture: boolean;
+    }
+  ): any => {
+    if (isGesture?.isGesture) {
+      const providedMarkers = await markerProvider.searchMarkers(eventData);
+      setMarkers(providedMarkers);
+    }
   };
+
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         provider="google"
-        region={{
-          latitude: location.latitude,
-          longitude: location.longitude,
-          latitudeDelta: locationDelta.latitudeDelta || 0.002177,
-          longitudeDelta: locationDelta.longitudeDelta || 0.0022973,
-        }}
         initialRegion={initialData as Region}
         onRegionChangeComplete={(region, isGesture) => {
-          if (isGesture?.isGesture) {
-            onRegionChangeCompleteHandler(region);
-          }
+          onRegionChangeCompleteHandler(region, isGesture);
         }}
       >
         {markers.map((marker, index) => (

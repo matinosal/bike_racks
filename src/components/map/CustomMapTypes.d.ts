@@ -13,6 +13,6 @@ type MapCoordinates = {
 };
 
 type MapDelta = {
-  latitudeDelta?: number;
-  longitudeDelta?: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
 };

@@ -1,9 +1,8 @@
 import { Region } from "react-native-maps";
-import { MapLocation, MarkerType } from "./CustomMapTypes";
-
+import { dev_config } from "../../../dev-config";
+import { MapCoordinates, MapLocation, MarkerType } from "./CustomMapTypes";
 class MarkerProvider {
   markers!: MarkerType[];
-  counter!: number;
   constructor() {
     this.markers = [];
   }
@@ -13,20 +12,43 @@ class MarkerProvider {
   };
 
   public async searchMarkers(regionInfo: MapLocation): Promise<MarkerType[]> {
-    this.markers = await this.apiCall();
+    const searchPoints = this.calculateSearchPoints(regionInfo);
+    this.markers = await this.apiCall(searchPoints);
     return this.markers;
   }
-  private apiCall = async (): Promise<MarkerType[]> => {
-    const markers = await fetch("http://192.168.0.199:8000/markers", {
-      method: "GET",
+
+  private apiCall = async (
+    searchPoints: MapCoordinates[]
+  ): Promise<MarkerType[]> => {
+    const markers = await fetch(`${dev_config.localApi}/markers/location`, {
+      method: "POST",
+      body: JSON.stringify({ points: searchPoints }),
     })
       .then((res) => res.json())
-      .then((res) => res.markers as MarkerType[])
+      .then((res) => {
+        console.log(res);
+        return res.markers;
+      })
       .catch((err) => {
-        return [] as MarkerType[];
+        return [];
       });
     return markers;
   };
+
+  private calculateSearchPoints(regionInfo: MapLocation): MapCoordinates[] {
+    const halfLongitudeDelta = regionInfo.longitudeDelta / 2 || 0;
+    const halfLatituedDelta = regionInfo.longitudeDelta / 2 || 0;
+    return [
+      {
+        latitude: regionInfo.latitude + halfLatituedDelta,
+        longitude: regionInfo.longitude - halfLongitudeDelta,
+      },
+      {
+        latitude: regionInfo.latitude - halfLatituedDelta,
+        longitude: regionInfo.longitude + halfLongitudeDelta,
+      },
+    ];
+  }
   //TODO
   //zrobić ograniczenie do ilości pokazywanych markerów
   private filterMarkers = (): void => {
