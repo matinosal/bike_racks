@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import MapScreen from "./src/views/MapScreen";
-import ProfileScreen from "./src/views/ProfileScreen";
+import LoginScreen from "./src/views/LoginScreen";
 
 const Tab = createBottomTabNavigator();
 //TODO zapisywanie lokalizacji do localStorage przy starcie apki
@@ -28,8 +28,8 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
+          name="Login"
+          component={LoginScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
