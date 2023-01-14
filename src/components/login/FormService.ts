@@ -1,9 +1,15 @@
 import { dev_config } from "../../../dev-config";
 
+//TODO: typ dla odpowiedzi zwracanej przez serwer
 export class FormService {
+  private errorMessage: string = "";
+
   public async registerUser(user: simpleUser): Promise<boolean> {
     const serverResult = await this.apiCall(user);
-    console.log(serverResult);
+
+    if (serverResult.data) return true;
+
+    this.errorMessage = serverResult.message;
     return false;
   }
   private apiCall = async (data: simpleUser) => {
@@ -11,8 +17,10 @@ export class FormService {
       method: "POST",
       body: JSON.stringify({ user: data }),
     }).then((res) => res.json());
-    console.log(response);
-    console.log({ user: data });
     return response;
+  };
+
+  public getErrorMessage = (): string => {
+    return this.errorMessage;
   };
 }

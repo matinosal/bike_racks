@@ -11,7 +11,7 @@ const RegisterForm: React.FC<loginProps> = ({ changeForm }) => {
   const [confirmPassword, setConfirmPasswordState] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const validateInputs = () => {
+  const validateInputs = async () => {
     if (!emailValidation(email)) {
       setErrorMessage("Invalid email address");
       return;
@@ -21,14 +21,16 @@ const RegisterForm: React.FC<loginProps> = ({ changeForm }) => {
       return;
     }
 
-    const result = service.registerUser({
+    const result = await service.registerUser({
       username: username,
       email: email,
       password: password,
     });
 
     if (!result) {
-      setErrorMessage("Something went wrong. Try again!");
+      setErrorMessage(service.getErrorMessage());
+    } else {
+      changeForm();
     }
   };
   return (
