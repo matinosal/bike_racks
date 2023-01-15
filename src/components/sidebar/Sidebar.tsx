@@ -23,7 +23,7 @@ interface Props {
   ref: any;
 }
 
-const Sidebar: React.FC<SidebarProps> = forwardRef(({ props, ref }) => {
+const Sidebar: React.FC<SidebarProps> = forwardRef((props, ref) => {
   const { width } = useWindowDimensions();
   const hideWidth = -width;
   const [isHidden, isHiddenSet] = useState<boolean>(true);
