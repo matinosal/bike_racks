@@ -1,5 +1,4 @@
 import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import AuthProvider from "./src/context/AuthContext";
 import AppNavigation from "./src/navigation/AppNavigation";

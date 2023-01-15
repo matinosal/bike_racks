@@ -1,6 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MapView, {
   EventUserLocation,
   LatLng,
@@ -8,7 +6,7 @@ import MapView, {
   Region,
 } from "react-native-maps";
 import * as Location from "expo-location";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   MapCoordinates,
   MapDelta,
@@ -16,19 +14,11 @@ import {
   MarkerType,
 } from "../components/map/CustomMapTypes";
 import MarkerProvider from "../components/map/MarkerProvider";
-
-const initialData: MapLocation = {
-  latitude: 50.07212722890865,
-  longitude: 19.94170333681023,
-  latitudeDelta: 0.0021773514383554016,
-  longitudeDelta: 0.002297312021255493,
-};
-
-let blockRegionChange = false;
-const markerProvider = new MarkerProvider();
+import Sidebar from "../components/sidebar/Sidebar";
 
 const MapScreen: React.FC = () => {
   const mapRef = useRef<MapView>(null);
+  const sidebarRef = useRef();
 
   const [errorMessage, setErrorMessage] = useState<String>();
   const [markers, setMarkers] = useState<MarkerType[]>([]);
@@ -71,6 +61,9 @@ const MapScreen: React.FC = () => {
       blockRegionChange = true;
     }
   };
+  const toggleSidebar = () => {
+    sidebarRef.current.sidebarAction();
+  };
   return (
     <View style={styles.container}>
       <MapView
@@ -87,19 +80,35 @@ const MapScreen: React.FC = () => {
           onRegionChangeCompleteHandler(region, isGesture);
         }}
       >
-        {markers.map((marker, index) => (
+        {markers.map((marker) => (
           <Marker
-            key={index}
+            key={marker.id}
             coordinate={{
               latitude: marker.latitude,
               longitude: marker.longitude,
             }}
+            onPress={() => toggleSidebar()}
           />
         ))}
       </MapView>
+      <Sidebar ref={sidebarRef} width={80} title={"Bike Rack"}>
+        <View>
+          <Text>Dziecko</Text>
+        </View>
+      </Sidebar>
     </View>
   );
 };
+
+const initialData: MapLocation = {
+  latitude: 50.07212722890865,
+  longitude: 19.94170333681023,
+  latitudeDelta: 0.0021773514383554016,
+  longitudeDelta: 0.002297312021255493,
+};
+
+let blockRegionChange = false;
+const markerProvider = new MarkerProvider();
 
 const styles = StyleSheet.create({
   container: {

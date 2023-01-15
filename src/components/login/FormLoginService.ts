@@ -14,7 +14,6 @@ export class FormLoginService {
   }
 
   public async login(user: simpleUser): Promise<boolean> {
-    console.log(`${dev_config.localApi}/user/auth`, user);
     const serverResult = await this.apiCall("/user/auth", user);
     if (serverResult.data) {
       this.token = serverResult.token;

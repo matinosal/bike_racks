@@ -1,11 +1,7 @@
 import React, { createContext, ReactNode, useState } from "react";
-import { AuthToken } from "../types/GlobalTypes";
+import { Props } from "./ContextTypes";
 
 export const AuthContext = createContext({});
-
-interface Props {
-  children: ReactNode;
-}
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
   const [userToken, setUserToken] = useState<string>("");
@@ -15,7 +11,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const loginSuccess = (token: string) => {
     setUserToken(token);
-    console.log(token);
     setUserLogged(true);
   };
 
