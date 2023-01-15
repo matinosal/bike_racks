@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  SafeAreaView,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { emailValidation } from "../../helpers/Validator";
 import { FormLoginService } from "./FormLoginService";
 
@@ -34,31 +41,36 @@ const RegisterForm: React.FC<loginProps> = ({ changeForm }) => {
     }
   };
   return (
-    <View style={styles.container}>
-      <Text>Register</Text>
-      <Text>Username</Text>
-      <TextInput style={styles.input} onChangeText={setUsernameState} />
-      <Text>E-mail</Text>
-      <TextInput style={styles.input} onChangeText={setEmailState} />
-      <Text>Password</Text>
-      <TextInput
-        secureTextEntry={true}
-        style={styles.input}
-        onChangeText={setPasswordState}
-      />
-      <Text>Confirm Password</Text>
-      <TextInput
-        secureTextEntry={true}
-        style={styles.input}
-        onChangeText={setConfirmPasswordState}
-      />
-      <Text>{errorMessage}</Text>
-      <Button title="Register" onPress={() => validateInputs()} />
-      <Button
-        title="Have an account? Login here"
-        onPress={() => changeForm()}
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAwareScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text>Register</Text>
+        <Text>Username</Text>
+        <TextInput style={styles.input} onChangeText={setUsernameState} />
+        <Text>E-mail</Text>
+        <TextInput style={styles.input} onChangeText={setEmailState} />
+        <Text>Password</Text>
+        <TextInput
+          secureTextEntry={true}
+          style={styles.input}
+          onChangeText={setPasswordState}
+        />
+        <Text>Confirm Password</Text>
+        <TextInput
+          secureTextEntry={true}
+          style={styles.input}
+          onChangeText={setConfirmPasswordState}
+        />
+        <Text>{errorMessage}</Text>
+        <Button title="Register" onPress={() => validateInputs()} />
+        <Button
+          title="Have an account? Login here"
+          onPress={() => changeForm()}
+        />
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({

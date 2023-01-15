@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  SafeAreaView,
+  Keyboard,
+} from "react-native";
 import { FormLoginService } from "./FormLoginService";
 
 const LoginForm: React.FC<loginProps> = ({ changeForm }) => {
@@ -19,6 +26,7 @@ const LoginForm: React.FC<loginProps> = ({ changeForm }) => {
       email: email,
       password: password,
     });
+    Keyboard.dismiss();
 
     if (!result) {
       setErrorMessage(service.getErrorMessage());
@@ -26,7 +34,7 @@ const LoginForm: React.FC<loginProps> = ({ changeForm }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>Login</Text>
       <Text>E-mail</Text>
       <TextInput style={styles.input} onChangeText={setEmail} />
@@ -39,7 +47,7 @@ const LoginForm: React.FC<loginProps> = ({ changeForm }) => {
       <Text>{errorMessage}</Text>
       <Button title="Login" onPress={() => loginUser()} />
       <Button title="Create account" onPress={() => changeForm()} />
-    </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
