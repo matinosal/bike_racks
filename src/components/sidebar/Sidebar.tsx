@@ -44,6 +44,7 @@ const Sidebar: React.FC<SidebarProps> = forwardRef((props, ref) => {
   };
 
   const hideSidebar = () => {
+    props.onSidebarClose?.();
     toggleSidebar();
   };
 
