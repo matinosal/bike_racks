@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { emailValidation } from "../../helpers/Validator";
-import { FormService } from "./FormService";
+import { FormLoginService } from "./FormLoginService";
 
 const RegisterForm: React.FC<loginProps> = ({ changeForm }) => {
-  const service = new FormService();
+  const service = new FormLoginService();
   const [username, setUsernameState] = useState<string>("");
   const [email, setEmailState] = useState<string>("");
   const [password, setPasswordState] = useState<string>("");
@@ -21,7 +21,7 @@ const RegisterForm: React.FC<loginProps> = ({ changeForm }) => {
       return;
     }
 
-    const result = await service.registerUser({
+    const result = await service.register({
       username: username,
       email: email,
       password: password,

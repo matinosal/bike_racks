@@ -3,7 +3,7 @@ type loginProps = {
 };
 
 type simpleUser = {
-  username: string;
+  email: string;
   password: string;
-  email?: string;
+  username?: string;
 };
