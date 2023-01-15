@@ -1,20 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import MapView, {
-  EventUserLocation,
-  LatLng,
-  Marker,
-  Region,
-} from "react-native-maps";
+import MapView, { EventUserLocation, Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  MapCoordinates,
-  MapDelta,
-  MapLocation,
-  MarkerType,
-} from "../components/map/CustomMapTypes";
+import { MapLocation, MarkerType } from "../components/map/CustomMapTypes";
 import MarkerProvider from "../components/map/MarkerProvider";
 import Sidebar from "../components/sidebar/Sidebar";
+import MarkerInfo from "../components/marker-info/MarkerInfo";
 
 const MapScreen: React.FC = () => {
   const mapRef = useRef<MapView>(null);
@@ -22,6 +13,7 @@ const MapScreen: React.FC = () => {
 
   const [errorMessage, setErrorMessage] = useState<String>();
   const [markers, setMarkers] = useState<MarkerType[]>([]);
+  const [currentMarkerId, setCurrentMarkerId] = useState<number>(0);
 
   useEffect(() => {
     (async () => {
@@ -47,6 +39,7 @@ const MapScreen: React.FC = () => {
       setMarkers(providedMarkers);
     }
   };
+
   const userLocationChangeHandler = (location: EventUserLocation) => {
     if (blockRegionChange == false) {
       mapRef.current?.animateToRegion(
@@ -61,9 +54,13 @@ const MapScreen: React.FC = () => {
       blockRegionChange = true;
     }
   };
-  const toggleSidebar = () => {
+
+  const openSidebar = (markerId: number) => {
+    console.log(markerId);
+    setCurrentMarkerId(markerId);
     sidebarRef.current.sidebarAction();
   };
+
   return (
     <View style={styles.container}>
       <MapView
@@ -87,14 +84,18 @@ const MapScreen: React.FC = () => {
               latitude: marker.latitude,
               longitude: marker.longitude,
             }}
-            onPress={() => toggleSidebar()}
+            onPress={() => openSidebar(marker.id)}
           />
         ))}
       </MapView>
-      <Sidebar ref={sidebarRef} width={80} title={"Bike Rack"}>
-        <View>
-          <Text>Dziecko</Text>
-        </View>
+
+      <Sidebar
+        ref={sidebarRef}
+        width={80}
+        title={"Bike Rack"}
+        onSidebarClose={() => console.log("sidebar zamkniety")}
+      >
+        <MarkerInfo id={currentMarkerId} />
       </Sidebar>
     </View>
   );

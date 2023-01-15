@@ -7,7 +7,7 @@ const SidebarBody: React.FC<SidebarBodyProps> = (props) => {
 };
 
 const styles = StyleSheet.create({
-  body: { backgroundColor: "red", width: "100%", height: "90%" },
+  body: { backgroundColor: "#fff", width: "100%", height: "90%" },
 });
 
 export default SidebarBody;
