@@ -5,13 +5,25 @@ import RegisterForm from "../components/login/RegisterForm";
 
 const LoginScreen: React.FC = () => {
   const [formType, setFormType] = useState<string>("login");
+  const [loaderActive, setLoaderActive] = useState<boolean>(false);
 
+  const changeLoaderState = (value: boolean) => {
+    setLoaderActive(value);
+  };
   return (
     <View style={styles.container}>
       {formType === "login" ? (
-        <LoginForm changeForm={() => setFormType("register")} />
+        <LoginForm
+          loaderActive={loaderActive}
+          changeLoaderState={(value: boolean) => changeLoaderState(value)}
+          changeForm={() => setFormType("register")}
+        />
       ) : (
-        <RegisterForm changeForm={() => setFormType("login")} />
+        <RegisterForm
+          loaderActive={loaderActive}
+          changeLoaderState={(value: boolean) => changeLoaderState(value)}
+          changeForm={() => setFormType("login")}
+        />
       )}
     </View>
   );
