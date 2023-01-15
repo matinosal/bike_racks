@@ -12,16 +12,9 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-import { block } from "react-native-reanimated";
 import SidebarBody from "./SidebarBody";
 import SidebarHeader from "./SidebarHeader";
 import { SidebarProps } from "./SidebarTypes";
-
-interface Props {
-  children: ReactNode;
-  props: any;
-  ref: any;
-}
 
 const Sidebar: React.FC<SidebarProps> = forwardRef((props, ref) => {
   const { width } = useWindowDimensions();

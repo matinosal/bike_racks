@@ -26,7 +26,6 @@ class MarkerProvider {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         return res.markers;
       })
       .catch((err) => {
