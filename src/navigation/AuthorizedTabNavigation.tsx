@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import UserInfo from "../views/ProfileScreen";
 import MapScreen from "../views/MapScreen";
 
 const Tab = createBottomTabNavigator();
@@ -18,6 +19,15 @@ const AuthorizedTabNavigation: React.FC = () => {
               color={color}
               size={size}
             />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={UserInfo}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} />
           ),
         }}
       />

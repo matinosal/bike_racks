@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import UserInfo from "../views/ProfileScreen";
 import LoginScreen from "../views/LoginScreen";
 import MapScreen from "../views/MapScreen";
 
@@ -25,6 +26,15 @@ const DefaultTabNavigation: React.FC = () => {
       <Tab.Screen
         name="Login"
         component={LoginScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={UserInfo}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />

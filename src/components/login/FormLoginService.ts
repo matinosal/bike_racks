@@ -5,7 +5,10 @@ export class FormLoginService {
   private errorMessage: string = "";
   private token: string = "";
   public async register(user: simpleUser): Promise<boolean> {
-    const serverResult = await this.apiCall("/user/add", user);
+    const serverResult = await this.apiCall(
+      `${dev_config.localApi}/user/add`,
+      user
+    );
 
     if (serverResult.data) return true;
 
@@ -14,7 +17,7 @@ export class FormLoginService {
   }
 
   public async login(user: simpleUser): Promise<boolean> {
-    const serverResult = await this.apiCall("/user/auth", user);
+    const serverResult = await this.apiCall(`${dev_config.localAuth}`, user);
     if (serverResult.data) {
       this.token = serverResult.token;
       return true;
@@ -25,7 +28,7 @@ export class FormLoginService {
   }
 
   private apiCall = async (endpoint: string, data: simpleUser) => {
-    const response = await fetch(`${dev_config.localApi}${endpoint}`, {
+    const response = await fetch(`${endpoint}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
