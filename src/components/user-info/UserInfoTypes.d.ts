@@ -1,18 +1,20 @@
+import { CustomComponentWrapperStyle } from "../../types/GlobalTypes";
+
 type UserData = UserHeaderProps &
   UserBioProps & {
     id: number;
   };
 
-type UserHeaderProps = {
+type UserHeaderProps = CustomComponentWrapperStyle & {
   image: string;
   username: string;
 };
 
-type UserBioProps = {
+type UserBioProps = CustomComponentWrapperStyle & {
   bio: string | null;
 };
 
-type UserStatsProps = {
+type UserStatsProps = CustomComponentWrapperStyle & {
   stats: UserStats;
 };
 

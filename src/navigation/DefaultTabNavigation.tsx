@@ -4,6 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import UserInfo from "../views/ProfileScreen";
 import LoginScreen from "../views/LoginScreen";
 import MapScreen from "../views/MapScreen";
+import NewMarkerScreen from "../views/NewMarkerScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,11 +34,11 @@ const DefaultTabNavigation: React.FC = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={UserInfo}
+        name="New Marker"
+        component={NewMarkerScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons name="bike" color={color} size={size} />
           ),
         }}
       />
