@@ -1,6 +1,8 @@
 interface NewMarkerStartProps {
-  getPictureAction(uri: string | undefined): void;
+  setPictureUri(uri: string | undefined): void;
 }
 interface NewMarkerForm {
   imageUri: string;
+  setDescriptionValue(description_: string): void;
+  runSaveAction(): void;
 }

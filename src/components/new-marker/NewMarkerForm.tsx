@@ -1,13 +1,18 @@
-import { ImageType } from "expo-camera/build/Camera.types";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {
+  Button,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 //TODO
 //po tapnieciu bio mozna go zmieniac
 const NewMarkerForm: React.FC<NewMarkerForm> = (props) => {
-  console.log(props);
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.imageAddContainer}>
         <View style={styles.halfWidthCentered}>
           <Text style={styles.header}>Picture: </Text>
@@ -23,7 +28,19 @@ const NewMarkerForm: React.FC<NewMarkerForm> = (props) => {
           </View>
         </View>
       </View>
-    </View>
+      <TextInput
+        multiline
+        autoCorrect
+        textAlignVertical={"top"}
+        placeholder={"Describe place"}
+        style={styles.input}
+        enablesReturnKeyAutomatically
+        onChangeText={(val) => {
+          props.setDescriptionValue(val);
+        }}
+      />
+      <Button title="Add Marker" onPress={props.runSaveAction} />
+    </ScrollView>
   );
 };
 
@@ -64,6 +81,16 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+  input: {
+    marginTop: 20,
+    marginBottom: 20,
+    height: 120,
+    borderWidth: 1,
+    padding: 10,
+  },
+  submitButton: {
+    marginTop: 20,
   },
 });
 export default NewMarkerForm;

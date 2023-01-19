@@ -14,7 +14,7 @@ const NewMarkerStart: React.FC<NewMarkerStartProps> = (props) => {
     const picture = await cameraRef?.takePictureAsync({
       quality: 0.8,
     });
-    props.getPictureAction(picture?.uri);
+    props.setPictureUri(picture?.uri);
   };
 
   if (!status) {

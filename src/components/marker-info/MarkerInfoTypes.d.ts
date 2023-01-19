@@ -1,9 +1,11 @@
 interface MarkerInfoProps {
   id: number;
 }
+//TODO przenieść typ gdzie indziej (jest używany w dwóch różnych komponentach)
 type MarkerData = {
-  id: number;
+  id?: number;
+  uri?: string;
   latitude: number;
-  longtitude: number;
-  description: string;
+  longitude: number;
+  description: string | undefined;
 };
