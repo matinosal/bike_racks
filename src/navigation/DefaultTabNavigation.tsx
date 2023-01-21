@@ -33,15 +33,6 @@ const DefaultTabNavigation: React.FC = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="New Marker"
-        component={NewMarkerScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="bike" color={color} size={size} />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 };

@@ -1,4 +1,5 @@
 import { dev_config } from "../../../dev-config";
+import { UserData, UserStats } from "./UserInfoTypes";
 
 class UserInfoService {
   private stats!: UserStats;

@@ -6,3 +6,7 @@ interface NewMarkerForm {
   setDescriptionValue(description_: string): void;
   runSaveAction(): void;
 }
+
+interface NewMarkerAddedProps {
+  buttonReset(): void;
+}

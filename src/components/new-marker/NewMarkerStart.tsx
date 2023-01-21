@@ -27,7 +27,7 @@ const NewMarkerStart: React.FC<NewMarkerStartProps> = (props) => {
           setCameraRef(ref);
         }}
         style={styles.camera}
-        type={CameraType.front}
+        type={CameraType.back}
         onCameraReady={() => cameraStart()}
       >
         <View style={styles.buttonContainer}>
