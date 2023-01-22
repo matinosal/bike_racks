@@ -1,11 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MapView, { EventUserLocation, Marker, Region } from "react-native-maps";
 import * as Location from "expo-location";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { MapLocation, MarkerType } from "../components/map/CustomMapTypes";
 import MarkerProvider from "../components/map/MarkerProvider";
 import Sidebar from "../components/sidebar/Sidebar";
 import MarkerInfo from "../components/marker-info/MarkerInfo";
+import { AuthContext } from "../context/AuthContext";
 
 const MapScreen: React.FC = () => {
   const mapRef = useRef<MapView>(null);
@@ -14,6 +15,7 @@ const MapScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<String>();
   const [markers, setMarkers] = useState<MarkerType[]>([]);
   const [currentMarkerId, setCurrentMarkerId] = useState<number>(0);
+  const { userToken }: any = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
@@ -56,7 +58,6 @@ const MapScreen: React.FC = () => {
   };
 
   const openSidebar = (markerId: number) => {
-    console.log(markerId);
     setCurrentMarkerId(markerId);
     sidebarRef.current.sidebarAction();
   };
@@ -89,13 +90,8 @@ const MapScreen: React.FC = () => {
         ))}
       </MapView>
 
-      <Sidebar
-        ref={sidebarRef}
-        width={80}
-        title={"Bike Rack"}
-        onSidebarClose={() => console.log("sidebar zamkniety")}
-      >
-        <MarkerInfo id={currentMarkerId} />
+      <Sidebar ref={sidebarRef} width={80} title={"Bike Rack"}>
+        <MarkerInfo id={currentMarkerId} token={userToken} />
       </Sidebar>
     </View>
   );

@@ -19,7 +19,7 @@ const UserInfo: React.FC = () => {
   const [stats, setStats] = useState<UserStats>({ visited: 0, added: 0 });
   const service = new UserInfoService();
   const { userToken }: any = useContext(AuthContext);
-
+  //dorobić aktualizację danych
   useEffect(() => {
     (async () => {
       setActiveLoader(true);

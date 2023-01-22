@@ -47,22 +47,28 @@ const Sidebar: React.FC<SidebarProps> = forwardRef((props, ref) => {
     props.onSidebarClose?.();
     toggleSidebar();
   };
-
+  //TODO sprawdzic jak się zachowa slider jak podzieli sie go na 2 kolumny content | pusto <- tu dac klika
   return (
     <Animated.View
       style={[styles.overlay, { transform: [{ translateX: bounceValue }] }]}
     >
-      <TouchableOpacity delayPressIn={1500} onPress={() => hideSidebar()}>
+      <View style={{ width: `${props.width ?? 80}%` }}>
+        <View style={[styles.sidebar]}>
+          <SidebarHeader title={props.title} closeSidebar={hideSidebar} />
+          <SidebarBody children={props.children} />
+        </View>
+      </View>
+      <View
+        style={{
+          width: `${props.width ? 100 - props.width : 20}%`,
+        }}
+      >
         <TouchableOpacity
-          activeOpacity={1}
-          style={{ width: `${props.width ?? 80}%` }}
-        >
-          <View style={[styles.sidebar]}>
-            <SidebarHeader title={props.title} />
-            <SidebarBody children={props.children} />
-          </View>
-        </TouchableOpacity>
-      </TouchableOpacity>
+          style={{ width: "100%", height: "100%" }}
+          delayPressIn={1500}
+          onPress={() => hideSidebar()}
+        />
+      </View>
     </Animated.View>
   );
 });
@@ -74,6 +80,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     top: 0,
+    flexDirection: "row",
   },
   sidebar: { height: "100%", backgroundColor: "#fff", position: "relative" },
 });

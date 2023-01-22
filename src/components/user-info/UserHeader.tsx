@@ -6,13 +6,12 @@ import { UserHeaderProps } from "./UserInfoTypes";
 //TODO
 //po tapnieciu zdjecia mozna wgrac na serwer swoje profilowe
 const UserHeader: React.FC<UserHeaderProps> = (props) => {
-  console.log(`${dev_config.basePath}${props.image}`);
   return (
     <View style={[styles.container, props?.style]}>
       <View style={styles.userImageContainer}>
         <Image
           source={{
-            uri: `${dev_config.basePath}${props.image}`,
+            uri: `${dev_config.filePath}${props.image}`,
           }}
           style={styles.userImage}
         ></Image>

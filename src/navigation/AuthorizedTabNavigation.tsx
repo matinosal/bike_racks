@@ -11,15 +11,6 @@ const AuthorizedTabNavigation: React.FC = () => {
   return (
     <Tab.Navigator initialRouteName={"Map"}>
       <Tab.Screen
-        name="New Marker"
-        component={NewMarkerScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="bike" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Map"
         component={MapScreen}
         options={{
@@ -29,6 +20,15 @@ const AuthorizedTabNavigation: React.FC = () => {
               color={color}
               size={size}
             />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="New Marker"
+        component={NewMarkerScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="bike" color={color} size={size} />
           ),
         }}
       />

@@ -9,6 +9,7 @@ interface SidebarProps {
 }
 interface SidebarHeaderProps {
   title: string;
+  closeSidebar(): void;
 }
 interface SidebarBodyProps {
   children: ReactNode;
