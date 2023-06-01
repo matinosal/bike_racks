@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Camera, CameraType } from "expo-camera";
+import { dev_config } from "../../../dev-config";
 
 const NewMarkerStart: React.FC<NewMarkerStartProps> = (props) => {
-  const [status, requestPermission] = Camera.useCameraPermissions();
+  const [status, setCameraPermission] = useState<boolean>(false);
   const [cameraReady, setCameraReady] = useState<boolean>();
   const [cameraRef, setCameraRef] = useState<Camera | null>(null);
 
@@ -16,6 +17,13 @@ const NewMarkerStart: React.FC<NewMarkerStartProps> = (props) => {
     });
     props.setPictureUri(picture?.uri);
   };
+
+  useEffect(() => {
+    (async () => {
+      const cameraPermission = await Camera.requestCameraPermissionsAsync();
+      setCameraPermission(cameraPermission.status === "granted");
+    })();
+  });
 
   if (!status) {
     return <Text>Ty no nie dziala</Text>;
