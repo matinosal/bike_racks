@@ -7,7 +7,7 @@ class UserInfoService {
   getStats = () => this.stats;
 
   public async getUser(token: string): Promise<any> {
-    const serverResult = await this.apiCall(`/user/`, token);
+    const serverResult = await this.apiCall(`/user`, token);
     console.log(serverResult);
     if (serverResult?.stats) {
       this.stats = serverResult.stats;
@@ -20,7 +20,7 @@ class UserInfoService {
 
   private apiCall = async (endpoint: string, token: string) => {
     const response = await fetch(`${dev_config.localApi}${endpoint}`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

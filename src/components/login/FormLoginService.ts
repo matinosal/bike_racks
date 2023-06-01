@@ -4,6 +4,7 @@ import { dev_config } from "../../../dev-config";
 export class FormLoginService {
   private errorMessage: string = "";
   private token: string = "";
+
   public async register(user: simpleUser): Promise<boolean> {
     const serverResult = await this.apiCall(
       `${dev_config.localApi}/user/add`,

@@ -21,7 +21,7 @@ class MarkerProvider {
     searchPoints: MapCoordinates[]
   ): Promise<MarkerType[]> => {
     const markers = await fetch(`${dev_config.localApi}/markers/location`, {
-      method: "POST",
+      method: "QUERY",
       body: JSON.stringify({ points: searchPoints }),
     })
       .then((res) => res.json())

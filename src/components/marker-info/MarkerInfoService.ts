@@ -20,13 +20,18 @@ class MarkerInfoService {
 
   public visitMarker = async (markerId: number | undefined, token: string) => {
     if (!markerId) return false;
-    return await this.apiAuthCall("/markers/visit", token, {
-      marker_id: markerId,
-    });
+    return await this.apiAuthCall(
+      "/markers/visit",
+      token,
+      {
+        marker_id: markerId,
+      },
+      "POST"
+    );
   };
   private apiCall = async (endpoint: string) => {
     const response = await fetch(`${dev_config.localApi}${endpoint}`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
@@ -37,10 +42,11 @@ class MarkerInfoService {
   private apiAuthCall = async (
     endpoint: string,
     token: string,
-    data?: visitedApiData
+    data?: visitedApiData,
+    queryMethod?: string
   ) => {
     const response = await fetch(`${dev_config.localApi}${endpoint}`, {
-      method: "POST",
+      method: queryMethod ?? "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
