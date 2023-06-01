@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Touchable,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import Loader from "../components/loader/Loader";
 import UserBio from "../components/user-info/UserBio";
@@ -7,6 +13,7 @@ import UserHeader from "../components/user-info/UserHeader";
 import UserInfoService from "../components/user-info/UserInfoService";
 import UserStatistics from "../components/user-info/UserStatistics";
 import { UserData, UserStats } from "../components/user-info/UserInfoTypes";
+import UserInfoEdit from "../components/user-info/UserInfoEdit";
 
 const UserInfo: React.FC = () => {
   const [activeLoader, setActiveLoader] = useState<boolean>(false);
@@ -17,8 +24,14 @@ const UserInfo: React.FC = () => {
     bio: "",
   });
   const [stats, setStats] = useState<UserStats>({ visited: 0, added: 0 });
+  const [editUser, setUserEdit] = useState<boolean>(false);
   const service = new UserInfoService();
   const { userToken }: any = useContext(AuthContext);
+
+  const changeUserInfoEditMode = () => {
+    setUserEdit(!editUser);
+  };
+
   //dorobić aktualizację danych
   useEffect(() => {
     (async () => {
@@ -33,7 +46,18 @@ const UserInfo: React.FC = () => {
 
   if (activeLoader) {
     return <Loader />;
+  } else if (editUser) {
+    return (
+      <UserInfoEdit
+        bio={user.bio}
+        image={user.image}
+        username={user.username}
+        id={user.id}
+        changeEditMode={(editMode: boolean) => setUserEdit(editMode)}
+      />
+    );
   }
+
   return (
     <View style={styles.container}>
       <UserHeader
@@ -43,6 +67,9 @@ const UserInfo: React.FC = () => {
       />
       <UserBio style={styles.sectionSeparator} bio={user.bio} />
       <UserStatistics style={styles.lastSectionSeparator} stats={stats} />
+      <TouchableOpacity style={styles.button} onPress={changeUserInfoEditMode}>
+        <Text style={styles.buttonText}>Edit profile</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -78,6 +105,21 @@ const styles = StyleSheet.create({
   },
   lastSectionSeparator: {
     marginTop: 10,
+  },
+  button: {
+    width: 90,
+    height: 40,
+    padding: 10,
+    margin: 10,
+    borderWidth: 1,
+    borderColor: "#47B377",
+    borderRadius: 4,
+    textAlign: "center",
+    color: "#47B377",
+    alignSelf: "flex-end",
+  },
+  buttonText: {
+    textAlign: "center",
   },
 });
 export default UserInfo;
