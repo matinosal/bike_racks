@@ -14,7 +14,6 @@ const MarkerInfoVisited: React.FC<MarkerInfoVisitedProps> = (props) => {
   useEffect(() => {
     if (!props.visited) setVisited(false);
     else setVisited(props.visited);
-    console.log(">>>>");
   }, [props.visited]);
 
   return (

@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  Button,
   Image,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 //TODO
@@ -39,7 +39,12 @@ const NewMarkerForm: React.FC<NewMarkerForm> = (props) => {
           props.setDescriptionValue(val);
         }}
       />
-      <Button title="Add Marker" onPress={props.runSaveAction} />
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={() => props.runSaveAction()}
+      >
+        <Text style={styles.button}>Add Marker</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -91,6 +96,21 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginTop: 20,
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 15,
+  },
+  button: {
+    width: 200,
+    height: 40,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#47B377",
+    borderRadius: 4,
+    textAlign: "center",
+    color: "#47B377",
   },
 });
 export default NewMarkerForm;
